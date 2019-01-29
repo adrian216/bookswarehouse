@@ -9,7 +9,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/main")
 public class BookController {
 
     private BookService bookService;
@@ -47,6 +47,16 @@ public class BookController {
     @GetMapping("/author/{authorName}")
     public List<Book> getBooksByAuthor(@PathVariable String authorName) {
         return bookService.getBooksByAuthor(authorName);
+    }
+
+    @GetMapping("/publisher/{publisherName}")
+    public List<Book> getBooksByPublisher(@PathVariable String publisherName) {
+        return  bookService.getBooksByPublisher(publisherName);
+    }
+
+    @GetMapping("/category/{categoryName}")
+    public List<Book> getBooksByCategory(@PathVariable String categoryName) {
+        return bookService.getBooksByCategory(categoryName);
     }
 
 

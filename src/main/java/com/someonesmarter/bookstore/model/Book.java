@@ -4,7 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.format.annotation.NumberFormat;
 
 import javax.persistence.*;
+import javax.persistence.JoinColumn;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // ignores the 'garbage' from hibernate (was getting some when calling get/book/id
@@ -16,14 +21,17 @@ public class Book {
     private long id;
 
     @Column(name="title")
-    @NotNull(message = "Title cannot be empty")
+    @NotBlank(message = "Title cannot be empty")
     private String title;
     @Column(name="description", length = 2500)
-    @NotNull(message = "description cannot be empty")
+    @NotBlank(message = "description cannot be empty")
     private String description;
 
+    @Column(name="price")
+    private BigDecimal price;
+
     @Column(name="isbn")
-    @NotNull(message = "ISBN cannot be empty")
+    @NotBlank(message = "ISBN cannot be empty")
     @NumberFormat
     private String isbn;
 
@@ -31,6 +39,18 @@ public class Book {
     @JoinColumn(name="author_id")
     @NotNull(message = "Author cannot be empty")
     private Author author;
+
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name="publisher_id")
+    @NotNull(message="Publisher cannot be empty")
+    private Publisher publisher;
+
+    @ManyToMany
+    @JoinTable(
+            name="book_category",
+            joinColumns=@JoinColumn(name="book_id"),
+            inverseJoinColumns=@JoinColumn(name="category_id"))
+    private List<Category> categories = new ArrayList<>();
 
     public Book() {
 
@@ -74,6 +94,30 @@ public class Book {
 
     public void setAuthor(Author author) {
         this.author = author;
+    }
+
+    public Publisher getPublisher() {
+        return publisher;
+    }
+
+    public void setPublisher(Publisher publisher) {
+        this.publisher = publisher;
+    }
+
+    public List<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        this.categories = categories;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
     }
 
     @Override
