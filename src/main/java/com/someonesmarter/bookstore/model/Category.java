@@ -17,7 +17,7 @@ public class Category {
     private long id;
 
     @Column(name="name")
-    @NotBlank(message = "Category name cannot be empty")
+    @NotBlank(message = "Category's name cannot be empty")
     private String name;
 
     @ManyToMany(mappedBy = "categories")

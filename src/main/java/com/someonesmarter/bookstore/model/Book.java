@@ -24,7 +24,7 @@ public class Book {
     @NotBlank(message = "Title cannot be empty")
     private String title;
     @Column(name="description", length = 2500)
-    @NotBlank(message = "description cannot be empty")
+    @NotBlank(message = "Description cannot be empty")
     private String description;
 
     @Column(name="price")
