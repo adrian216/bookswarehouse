@@ -31,18 +31,13 @@ public class BookService {
         Author authorFound = authorRepository.findByName(author.getName());
         if (authorFound == null) {
             authorRepository.save(author);
-        } else {
-            book.setAuthor(authorFound);
         }
 
         Publisher publisher = book.getPublisher();
         Publisher publisherFound = publisherRepository.findByName(publisher.getName());
         if (publisherFound == null) {
             publisherRepository.save(publisher);
-        } else {
-            book.setPublisher(publisherFound);
         }
-
         bookRepository.save(book);
         return book;
     }

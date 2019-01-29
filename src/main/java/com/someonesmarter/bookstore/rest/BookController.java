@@ -9,7 +9,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/main")
+@RequestMapping("/book")
 public class BookController {
 
     private BookService bookService;
@@ -19,27 +19,27 @@ public class BookController {
         this.bookService=bookService;
     }
 
-    @PostMapping("/book")
+    @PostMapping
     public Book saveBook(@Valid @RequestBody Book book) {
         return bookService.addBook(book);
     }
 
-    @GetMapping("/book")
+    @GetMapping
     public List<Book> getBooks() {
         return bookService.getAllBooks();
     }
 
-    @GetMapping("/book/{bookId}")
+    @GetMapping("/{bookId}")
     public Book getBookById(@PathVariable long bookId) {
         return bookService.getBookById(bookId);
     }
 
-    @DeleteMapping("/book")
+    @DeleteMapping
     public void deleteBook(@RequestBody Book book) {
         bookService.deleteBook(book);
     }
 
-    @DeleteMapping("/book/{bookId}")
+    @DeleteMapping("/{bookId}")
     public void deleteBookById(@PathVariable long bookId) {
         bookService.deleteBookById(bookId);
     }
