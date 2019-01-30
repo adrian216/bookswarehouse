@@ -1,6 +1,6 @@
 package com.someonesmarter.bookstore.service;
 
-import com.someonesmarter.bookstore.model.Category;
+import com.someonesmarter.bookstore.entity.Category;
 import com.someonesmarter.bookstore.repository.CategoryRepository;
 import org.springframework.stereotype.Service;
 

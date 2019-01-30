@@ -1,4 +1,4 @@
-package com.someonesmarter.bookstore.model;
+package com.someonesmarter.bookstore.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.format.annotation.NumberFormat;
@@ -7,14 +7,16 @@ import javax.persistence.*;
 import javax.persistence.JoinColumn;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) // ignores the 'garbage' from hibernate (was getting some when calling get/book/id
 @Table(name="book")
-public class Book {
+public class Book implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +42,7 @@ public class Book {
     @NotNull(message = "Author cannot be empty")
     private Author author;
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne()
     @JoinColumn(name="publisher_id")
     @NotNull(message="Publisher cannot be empty")
     private Publisher publisher;
@@ -127,6 +129,33 @@ public class Book {
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
                 ", isbn='" + isbn + '\'' +
+                ", author=" + author +
+                ", publisher=" + publisher +
+                ", categories=" + categories +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        } else if (object == null || getClass() != object.getClass()) {
+            return false;
+        }
+
+        Book book = (Book) object;
+        return  Objects.equals(id, book.id) &&
+                Objects.equals(title, book.title) &&
+                Objects.equals(description, book.description) &&
+                Objects.equals(author, book.author) &&
+                Objects.equals(isbn, book.isbn) &&
+                Objects.equals(categories, book.categories) &&
+                Objects.equals(price, book.price) &&
+                Objects.equals(publisher, book.publisher);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, description, author, isbn, categories, price, publisher);
     }
 }

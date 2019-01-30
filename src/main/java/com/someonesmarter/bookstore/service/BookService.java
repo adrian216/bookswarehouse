@@ -1,9 +1,9 @@
 package com.someonesmarter.bookstore.service;
 
-import com.someonesmarter.bookstore.model.Author;
-import com.someonesmarter.bookstore.model.Book;
-import com.someonesmarter.bookstore.model.Category;
-import com.someonesmarter.bookstore.model.Publisher;
+import com.someonesmarter.bookstore.entity.Author;
+import com.someonesmarter.bookstore.entity.Book;
+import com.someonesmarter.bookstore.entity.Category;
+import com.someonesmarter.bookstore.entity.Publisher;
 import com.someonesmarter.bookstore.repository.AuthorRepository;
 import com.someonesmarter.bookstore.repository.BookRepository;
 import com.someonesmarter.bookstore.repository.CategoryRepository;
@@ -38,6 +38,16 @@ public class BookService {
         if (publisherFound == null) {
             publisherRepository.save(publisher);
         }
+
+        List<Category> categories = book.getCategories();
+        List<Category> categoriesFound = categoryRepository.findAll();
+
+        for (Category category: categories) {
+            if (!categoriesFound.contains(category)) {
+                categoryRepository.save(category);
+            }
+        }
+
         bookRepository.save(book);
         return book;
     }

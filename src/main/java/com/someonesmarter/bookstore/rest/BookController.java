@@ -1,6 +1,6 @@
 package com.someonesmarter.bookstore.rest;
 
-import com.someonesmarter.bookstore.model.Book;
+import com.someonesmarter.bookstore.entity.Book;
 import com.someonesmarter.bookstore.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

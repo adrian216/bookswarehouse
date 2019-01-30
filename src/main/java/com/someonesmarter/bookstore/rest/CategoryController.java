@@ -1,6 +1,6 @@
 package com.someonesmarter.bookstore.rest;
 
-import com.someonesmarter.bookstore.model.Category;
+import com.someonesmarter.bookstore.entity.Category;
 import com.someonesmarter.bookstore.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

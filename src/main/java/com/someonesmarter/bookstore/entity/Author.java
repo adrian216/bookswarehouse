@@ -1,14 +1,16 @@
-package com.someonesmarter.bookstore.model;
+package com.someonesmarter.bookstore.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name="author")
-public class Author {
+public class Author implements Serializable {
 
     @Id
     @Column(name="id")
@@ -48,5 +50,23 @@ public class Author {
 
     public void setBooks(List<Book> books) {
         this.books = books;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return
+                true;
+        if (o == null || getClass() != o.getClass()) return
+                false;
+
+        Author author = (Author) o;
+        return id == author.id &&
+                Objects.equals(name, author.name) &&
+                Objects.equals(books, author.books);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, books);
     }
 }

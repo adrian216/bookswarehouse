@@ -1,15 +1,17 @@
-package com.someonesmarter.bookstore.model;
+package com.someonesmarter.bookstore.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name="category")
-public class Category {
+public class Category implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -57,5 +59,22 @@ public class Category {
         return "Category{" +
                 "name='" + name + '\'' +
                 '}';
+    }
+
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        } else if (object == null || (object.getClass() == getClass())) {
+            return false;
+        }
+        Category category = (Category) object;
+        return Objects.equals(category.id, id) &&
+               Objects.equals(category.name, name) &&
+               Objects.equals(category.books, books);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, books);
     }
 }
